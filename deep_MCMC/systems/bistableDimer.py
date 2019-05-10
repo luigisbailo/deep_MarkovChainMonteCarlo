@@ -2,6 +2,36 @@ import numpy as np
 import tensorflow as tf
 
 
+def ensure_traj(X):
+    if np.ndim(X) == 2:
+        return X
+    if np.ndim(X) == 1:
+        return np.array([X])
+    raise ValueError('Incompatible array with shape: ', np.shape(X))
+
+
+def distance_matrix_squared(crd1, crd2, dim=2):
+    """ Returns the distance matrix or matrices between particles
+    Parameters
+    ----------
+    crd1 : array or matrix
+        first coordinate set
+    crd2 : array or matrix
+        second coordinate set
+    dim : int
+        dimension of particle system. If d=2, coordinate vectors are [x1, y1, x2, y2, ...]
+    """
+    crd1 = ensure_traj(crd1)
+    crd2 = ensure_traj(crd2)
+    n = int(np.shape(crd1)[1]/dim)
+
+    crd1_components = [np.tile(np.expand_dims(crd1[:, i::dim], 2), (1, 1, n)) for i in range(dim)]
+    crd2_components = [np.tile(np.expand_dims(crd2[:, i::dim], 2), (1, 1, n)) for i in range(dim)]
+    D2_components = [(crd1_components[i] - np.transpose(crd2_components[i], axes=(0, 2, 1)))**2 for i in range(dim)]
+    D2 = np.sum(D2_components, axis=0)
+    return D2
+
+
 class bistableDimer (object):
 
     params_default = {'nsolvent': 36,

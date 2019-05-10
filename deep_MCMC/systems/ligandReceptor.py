@@ -119,3 +119,6 @@ class LigandReceptor (object):
         energy = 0.5 * self.params['k_rep'] * (1-d2/self.params['sigma_rep'])
         return tf.reduce_sum(energy, axis=(1, 2))
 
+
+
+

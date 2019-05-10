@@ -1,0 +1,16 @@
+# ignore unversioned subfolders
+cmake-*/**
+./build/*
+./dist/*
+./deep_MCMC.egg-info/*
+.idea
+./deep_MCMC.ipynb_checkpoints/*
+./deep_MCMC/__pycache__/*
+./__pycache__/*
+
+
+
+# ignore swapfiles
+*.swp
+tags
+*.npy
