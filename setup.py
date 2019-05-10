@@ -61,12 +61,12 @@ class CMakeBuild(build_ext):
 setup(name='deep_MCMC',
       version='0.1',
       description='Implementation of deep_MarkovChainMonteCarlo',
-      author='Luigi Sbailo Manuel Dibak',
-      author_email='luigi.sbailo@gmail.com, manuel.dibak@fu-berlin.de',
+      author='Luigi Sbailo',
+      author_email='luigi.sbailo@gmail.com',
       url='',
       cmdclass=dict(build_ext=CMakeBuild),
       install_require=['numpy', 'scipy', 'tensorflow>=1.4', 'pickle'],
-      packages=['deep_MCMC'],
+      packages=['deep_MCMC', 'deep_MCMC.systems'],
       test_suite='nose.collector',
       tests_require=['nose']
       )
