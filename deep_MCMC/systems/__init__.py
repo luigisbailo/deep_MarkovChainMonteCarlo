@@ -1,2 +1,2 @@
-from .ligandReceptor import *
-from .bistableDimer import *
+from .LigandReceptor import *
+from .BistableDimer import *
