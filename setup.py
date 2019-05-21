@@ -60,7 +60,7 @@ class CMakeBuild(build_ext):
 
 setup(name='deep_MCMC',
       version='0.1',
-      description='Implementation of deep_MarkovChainMonteCarlo',
+      description='Implementation of Deep_MarkovChainMonteCarlo',
       author='Luigi Sbailo',
       author_email='luigi.sbailo@gmail.com',
       url='',
