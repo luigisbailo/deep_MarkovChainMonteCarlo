@@ -44,7 +44,7 @@ class LigandReceptor (object):
                       'k_rep': 20.0,  # harmonic repulsion all particles
                       'k_ligand': 10.0,  # harmonic attraction ligands
                       'k_receptor': 100.0,  # harmonic attraction receptor_site
-                      'box_size': 6.0,
+                      'box_size': 4.0,
                       'box_k': 100.0,  # box repulsion force constant
                       # receptors always bind to the surface z=0
                       'x_a': 1,  # binding site receptor a
@@ -272,5 +272,23 @@ class LigandReceptor (object):
     def energy(self, conf):
         return self.ligand_receptor_energy(conf) + self.ligand_ligand_energy(conf) + self.receptor_site_energy(conf) \
                + self.box_energy(conf)
+
+    def draw_config (self, conf):
+        import matplotlib.pyplot as plt
+        from mpl_toolkits.mplot3d import Axes3D
+        fig = plt.figure()
+        ax = fig.add_subplot(111, projection='3d')
+        # ligand
+        ax.scatter(conf[0, 0], conf[0, 1], conf[0, 2], color='orange')
+        ax.scatter(conf[1, 0], conf[1, 1], conf[1, 2], color='red')
+        # receptor
+        ax.scatter(conf[2, 0], conf[2, 1], conf[2, 2], color='royalblue')
+        ax.scatter(conf[3, 0], conf[3, 1], conf[3, 2], color='royalblue')
+        ax.scatter(conf[4, 0], conf[4, 1], conf[4, 2], color='royalblue')
+        ax.set_xlim(-self.params['box_size']/2, self.params['box_size']/2)
+        ax.set_ylim(-self.params['box_size']/2, self.params['box_size']/2)
+        ax.set_zlim(-self.params['box_size']/2, self.params['box_size']/2)
+
+
 
 
