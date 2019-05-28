@@ -23,18 +23,19 @@ class MarkovChainLocalSteps:
             else:
                 print('Invalid reporter. Using none.')
         for count in steps:
-            conf_trial = conf + noise*np.random.rand(*conf.shape)
+            conf_trial = conf + noise*np.random.normal(size=[*conf.shape])
+
+            energy = self.system.energy(conf)
             energy_trial = self.system.energy(conf_trial)
-
             acceptance = np.exp(-beta*(energy_trial-energy))
-            energy = np.where(acceptance > 1, energy_trial, energy)
-
             acceptance_exp = np.expand_dims(np.expand_dims(acceptance, 1), 2)
-            conf = np.where(acceptance_exp > 1, conf_trial, conf)
+            rand_extractions = np.random.rand(*acceptance_exp.shape)
+            conf = np.where(rand_extractions < acceptance_exp, conf_trial, conf)
+            acceptance = np.where(acceptance < 1, acceptance, 1)
+            acceptance_list.append(acceptance)
+
             if count % stride == 0:
                 markov_chain.append(conf)
-                acceptance = np.where(acceptance<1, acceptance, 1)
-                acceptance_list.append(acceptance)
 
         acceptance_list = np.transpose(np.array(acceptance_list), (1, 0))
         markov_chain = np.transpose(np.array(markov_chain), (1, 0, 2, 3))
